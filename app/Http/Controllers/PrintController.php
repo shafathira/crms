@@ -17,6 +17,7 @@ class PrintController extends Controller
 
         $pdf = PDF::loadView('generate_pdf', $data);
 
+
         return $pdf->stream();
     }
 }
