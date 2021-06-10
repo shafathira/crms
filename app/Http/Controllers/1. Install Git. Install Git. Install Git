@@ -1,0 +1,16 @@
+1. Install Git
+2. Open command prompt
+3. (git init) for new project without git.
+
+
+4. (git add .) for adding all files.
+5. (git commit -m "Commit Message") for committing any changes into your project.
+6. (git remote add origin https://github.com/yourusername/your-repo-name.git) for initializing where to upload project into (Which Repository?)
+7. (git push -u origin master) for pushing into GitHub or (git push).
+
+For new laptop:
+1. Install Git
+2. Open command prompt
+3. (git init) for new project without git.
+4. (git remote add origin https://github.com/yourusername/your-repo-name.git) for initializing where to upload project into (Which Repository?)
+5. (git pull)
