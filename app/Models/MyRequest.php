@@ -9,7 +9,6 @@ class MyRequest extends Model
 {
     use HasFactory;
 
-
     public function coordinators()
     {
         return $this->belongsTo(User::class, 'Coor_id', 'id');
@@ -33,5 +32,10 @@ class MyRequest extends Model
     public function courses()
     {
         return $this->belongsTo(Course::class, 'course_id', 'id');
+    }
+
+    public function myrequestbridge()
+    {
+        return $this->hasMany(MyRequestBridge::class,'bridge_id','id');
     }
 }

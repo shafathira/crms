@@ -45,14 +45,27 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/tc', [TCController::class, 'dashboard_tc'])->name('tc');
     Route::get('/dashboard/coordinator', [CoorController::class, 'dashboard_coordinator'])->name('coordinator');
 
-    Route::get('myrequests/showall', [MyRequestController::class, 'showall'])->name('myrequests.showall');
+
+    // Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
+    // Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
+    // Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
+    // Route::get('/myrequests/{myRequest}', [MyRequestController::class, 'show'])->name('myrequests.show');
+    // Route::get('/myrequests/{myRequest}/showall', [MyRequestController::class, 'showall'])->name('myrequests.showall');
+    // Route::get('/myrequests/{myRequest}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
+    // Route::delete('/myrequests/{myRequest}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
+
+    Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
+    Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
+    Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
+    Route::get('/myrequests/{form}', [MyRequestController::class, 'show'])->name('myrequests.show');
+    Route::get('/myrequests/{form}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
+    Route::delete('/myrequests/{form}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
 
     Route::resource('courses', CourseController::class);
     Route::resource('programmes', ProgrammeController::class);
     Route::resource('groups', GroupController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('users', UserController::class);
-    Route::resource('myrequests', MyRequestController::class);
 
 
     Route::get('user', [UserController::class, 'index'])->name('user.index');

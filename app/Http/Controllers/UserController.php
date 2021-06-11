@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {   //condition dia akan get user yg id dia tak sama dengn 1
-        $users = User::where('id','!=',1)->get();
+        $users = User::where('role_id','!=',1)->get();
         return view('users.index',compact('users'));
 
     }

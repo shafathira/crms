@@ -27,13 +27,13 @@ Tip 2: you can also add an image using data-image tag
             </li>
             <li>
                 <a class="nav-link" href="{{route('courses.index')}}">
-                    <i class="nc-icon nc-bullet-list-67"></i>
+                    <i class="nc-icon nc-grid-45"></i>
                     <p>Course Menu</p>
                 </a>
             </li>
             <li>
                 <a class="nav-link" href="{{route('semesters.index')}}">
-                    <i class="nc-icon nc-bullet-list-67"></i>
+                    <i class="nc-icon nc-bank"></i>
                     <p>Semester Menu</p>
                 </a>
             </li>
@@ -45,13 +45,13 @@ Tip 2: you can also add an image using data-image tag
             </li>
             <li>
                 <a class="nav-link" href="{{route('groups.index')}}">
-                    <i class="nc-icon nc-bullet-list-67"></i>
+                    <i class="nc-icon nc-notes"></i>
                     <p>Group Menu</p>
                 </a>
             </li>
             <li>
                 <a class="nav-link" href="{{route('users.index')}}">
-                    <i class="nc-icon nc-bullet-list-67"></i>
+                    <i class="nc-icon nc-single-02"></i>
                     <p>User Menu</p>
                 </a>
             </li>

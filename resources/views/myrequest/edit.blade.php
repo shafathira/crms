@@ -5,7 +5,7 @@
     <h1>Edit </h1>
     <a href="{{ route('myrequests.index') }}" class="btn btn-secondary my-3">Requested Courses</a>
 
-    <form method="POST" action="{{ route('myrequests.update', $myrequest) }}">
+    {{-- <form method="POST" action="{{ route('myrequests.update', $myrequest) }}">
         @csrf
         @method('PATCH')
 
@@ -47,7 +47,7 @@
         </div>
 
         <button type="submit" class="btn btn-success my-3">Update Requested Courses</button>
-    </form>
+    </form> --}}
 </div>
 
 @endsection

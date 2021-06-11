@@ -1,53 +1,93 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
+<div class="container mt-4" >
     @include('partials.message')
-    <h1>Requested Course</h1>
+    <h5 class='text-center'>FAKULTI SAINS KOMPUTER DAN MATEMATIK </h5>
+                <h6 class='text-center'>BORANG PERMOHONAN KURSUS</h6>
+        <br><br>
+
+        <form method="POST" action="{{ route('myrequests.show') }}">
+            @csrf
+            <table class="table table-bordered mb-4" style="border-color:rgb(61, 56, 66)">
+
+                <tbody>
+                    <tr>
+                        <td>Coordinator Name</td>
+                        <td><span>{{ $form->coordinators->name }}</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>Program</td>
+                        <td>
+                            <span>{{ $form->programmes->programme_code }}</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Telephone Number</td>
+                        <td><span>{{ $form->coordinators->Phone_No }}</span></td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+            <table class="table table-bordered mb-4">
+
+                <tbody>
+                    <tr>
+                        <td>Semester</td>
+                        <td><span>{{ $form->semesters->semester_session }}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Group</td>
+                        <td><span>{{ $form->groups->group_code }}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered mb-4">
+                <thead>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Credit Hour</th>
+                        <th>Lecture Hour</th>
+                        <th>Tutorial Hour</th>
+                        <th>Lab Hour</th>
+                        <th>Student Number</th>
+                        <th>Lecturer Name</th>
+
+                    </tr>
+                </thead>
+
+                <tbody class="input_fields_wrap">
+
+                    <tr>
+                        <td><input id="course_1_name" type="text" disabled name="course_name[]" /></td>
+                        <td><input id="course_1_name" type="text" disabled name="course_name[]" /></td>
+                        <td><input id="course_1_creditH" type="number" disabled name="credit_hour[]" /></td>
+                        <td><input id="lecture_hour" type="number" name="lecture_hour[]" /></td>
+                        <td><input id="tutorial_hour" type="number" name="tutorial_hour[]" /></td>
+                        <td><input id="lab_hour" type="number" name="lab_hour[]" /></td>
+                        <td><input id="student_number" type="number" name="student_number[]" /></td>
+                        <td><input id="lecturer_name" type="text" name="lecturer_name[]" /></td>s
+
+                    </tr>
+
+                </tbody>
+
+            </table>
 
 
-    <div class="form-group">
-        <label for="course_code">Course Code:</label>
-        <input disabled type="text" class="form-control" name="course_code" id="course_code" value="{{ $myRequest->courses->course_code }}">
-    </div>
 
-    <div class="form-group">
-        <label for="course_name">Course Name:</label>
-        <input disabled type="text" class="form-control" name="course_name" id="course_name" value="{{ $myRequest->courses->course_name }}">
-    </div>
-
-    <div class="form-group">
-        <label for="credit_hour">Credit Hour:</label>
-        <input disabled type="text" class="form-control" name="credit_hour" id="credit_hour" value="{{ $myRequest->courses->credit_hour }}">
-    </div>
-
-    <div class="form-group">
-        <label for="lecture_hour">Lecture Hour:</label>
-        <input disabled type="text" class="form-control" name="lecture_hour" id="lecture_hour" value="{{ $myRequest->lecture_hour }}">
-    </div>
-
-    <div class="form-group">
-        <label for="tutorial_hour">Tutorial Hour:</label>
-        <input disabled type="text" class="form-control" name="tutorial_hour" id="tutorial_hour" value="{{ $myRequest->tutorial_hour }}">
-    </div>
-
-    <div class="form-group">
-        <label for="lab_hour">Lab Hour:</label>
-        <input disabled type="text" class="form-control" name="lab_hour" id="lab_hour" value="{{ $myRequest->lab_hour }}">
-    </div>
-
-    <div class="form-group">
-        <label for="student_number">Student Number:</label>
-        <input disabled type="text" class="form-control" name="student_number" id="student_number" value="{{ $myRequest->student_number}}">
-    </div>
-
-    <div class="form-group">
-        <label for="lecturer_name">Course Name:</label>
-        <input disabled type="text" class="form-control" name="lecturer_name" id="lecturer_name" value="{{ $myRequest->lecturer_name}}">
-    </div>
+                <div class='form-group'>
+                    <button type="button" class="btn btn-sm add_field_button">Add column</button>
+                </div>
 
 
-    <a href="{{ route('myrequests.index') }}" class="btn btn-secondary my-3">Requested Courses</a>
+
+            </form>
+
+
 </div>
-
 @endsection

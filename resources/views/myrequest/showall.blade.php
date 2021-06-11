@@ -12,14 +12,14 @@
           <tr class="text-center">
             <th>Programme Code</th>
             <th>Group Code</th>
-            <th>Course Code</th>
+            {{-- <th>Course Code</th>
             <th>Course Name</th>
             <th>Credit Hour</th>
             <th>Lecture Hour</th>
             <th>Tutorial Hour</th>
             <th>Lab Hour</th>
             <th>Student Number</th>
-            <th>Lecturer Name</th>
+            <th>Lecturer Name</th> --}}
           </tr>
         </thead>
         <tbody>
@@ -28,14 +28,14 @@
             <tr class="text-center">
                 <td>{{ $myRequest->programmes->programme_code }}</td>
                 <td>{{ $myRequest->groups->group_code }}</td>
-                <td>{{ $myRequest->courses->course_code }}</td>
+                {{-- <td>{{ $myRequest->courses->course_code }}</td>
                 <td>{{ $myRequest->courses->course_name }}</td>
                 <td>{{ $myRequest->courses->credit_hour }}</td>
                 <td>{{ $myRequest->lecture_hour }}</td>
                 <td>{{ $myRequest->tutorial_hour }}</td>
                 <td>{{ $myRequest->lab_hour }}</td>
                 <td>{{ $myRequest->student_number }}</td>
-                <td>{{ $myRequest->lecturer_name }}</td>
+                <td>{{ $myRequest->lecturer_name }}</td> --}}
 
 
                 {{-- <td>
