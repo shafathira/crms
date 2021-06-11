@@ -29,11 +29,6 @@ class MyRequest extends Model
         return $this->belongsTo(Group::class, 'group_id', 'id');
     }
 
-    public function courses()
-    {
-        return $this->belongsTo(Course::class, 'course_id', 'id');
-    }
-
     public function myrequestbridge()
     {
         return $this->hasMany(MyRequestBridge::class,'bridge_id','id');

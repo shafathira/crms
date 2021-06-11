@@ -87,13 +87,13 @@ class MyRequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MyRequest  $form
+     * @param  \App\Models\MyRequest  $myRequest
      * @return \Illuminate\Http\Response
      */
-    public function show(MyRequest $form)
+    public function show(MyRequest $myRequest)
     {
-        $borang=MyRequest::find($form->id);
-        return view('myrequest.show', compact('borang'));
+        $myRequestBridge=MyRequestBridge::where('bridge_id',$myRequest->id)->get();
+        return view('myrequest.show', compact('myRequest','myRequestBridge'));
     }
 
     public function showall()

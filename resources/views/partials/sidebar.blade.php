@@ -20,7 +20,7 @@ Tip 2: you can also add an image using data-image tag
 
             @if (Auth::user()->role_id ==1)
             <li>
-                <a class="nav-link" href="{{ route('myrequests.showall') }}">
+                <a class="nav-link" href="{{route('myrequests.showall')}}">
                     <i class="nc-icon nc-send"></i>
                     <p>Requested Courses</p>
                 </a>

@@ -13,4 +13,10 @@ class MyRequestBridge extends Model
     {
         return $this->belongsTo(MyRequest::class,'bridge_id','id');
     }
+
+
+    public function courses()
+    {
+        return $this->belongsTo(Course::class, 'course_id', 'id');
+    }
 }

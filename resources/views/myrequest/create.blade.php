@@ -98,7 +98,7 @@
                         <td><input id="tutorial_hour" type="number" name="tutorial_hour[]" /></td>
                         <td><input id="lab_hour" type="number" name="lab_hour[]" /></td>
                         <td><input id="student_number" type="number" name="student_number[]" /></td>
-                        <td><input id="lecturer_name" type="text" name="lecturer_name[]" /></td>s
+                        <td><input id="lecturer_name" type="text" name="lecturer_name[]" /></td>
 
                     </tr>
 

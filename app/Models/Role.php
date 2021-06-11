@@ -8,10 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 
 {
-    use HasFactory;
-    protected $table = 'roles';
-    protected $fillable = ['id', 'role_name'];
-    public $timestamps = false;
 
     public function users(){
         return $this->hasOne(User::class, 'role_id', 'id');

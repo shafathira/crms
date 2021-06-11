@@ -18,21 +18,21 @@
         </thead>
         <tbody>
 
-            @foreach ($myRequests as $form)
+            @foreach ($myRequests as $myRequest)
             <tr class="text-center">
-                <td>{{ $form->programmes->programme_code }}</td>
-                <td>{{ $form->groups->group_code }}</td>
+                <td>{{ $myRequest->programmes->programme_code }}</td>
+                <td>{{ $myRequest->groups->group_code }}</td>
 
                 <td>
 
-                    <a href="{{route('myrequests.show', $form)}}" class="btn btn-info btn-fill ">Show</a>
+                    <a href="{{route('myrequests.show', $myRequest)}}" class="btn btn-info btn-fill ">Show</a>
                 </td>
                 <td>
-                    <a href="{{route('myrequests.edit', $form)}}" class="btn btn-success ">Edit</a>
+                    <a href="{{route('myrequests.edit', $myRequest)}}" class="btn btn-success ">Edit</a>
                 </td>
 
                 <td>
-                    <form method="post" action="{{ route('myrequests.destroy',  $form) }}" >
+                    <form method="post" action="{{ route('myrequests.destroy',  $myRequest) }}" >
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger ">Delete</button>
@@ -44,7 +44,6 @@
 
         </tbody>
     </table>
-    <a href="{{ route('myrequests.create') }}" class="btn btn-primary my-3">Back to Request Form</a>
 </div>
 
 

@@ -34,38 +34,38 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Auth::routes(); //login&register
 
 Route::get('generate-pdf', [PrintController::class, 'generatePDF'])->name('generate-pdf');
 
 Route::middleware('auth')->group(function () {
 
+    // Route::middleware('role:1')->group(function () {
+
     Route::get('/dashboard/admin', [AdminController::class, 'dashboard_admin'])->name('admin');
-    Route::get('/dashboard/tc', [TCController::class, 'dashboard_tc'])->name('tc');
-    Route::get('/dashboard/coordinator', [CoorController::class, 'dashboard_coordinator'])->name('coordinator');
-
-
-    // Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
-    // Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
-    // Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
-    // Route::get('/myrequests/{myRequest}', [MyRequestController::class, 'show'])->name('myrequests.show');
-    // Route::get('/myrequests/{myRequest}/showall', [MyRequestController::class, 'showall'])->name('myrequests.showall');
-    // Route::get('/myrequests/{myRequest}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
-    // Route::delete('/myrequests/{myRequest}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
-
-    Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
-    Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
-    Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
-    Route::get('/myrequests/{form}', [MyRequestController::class, 'show'])->name('myrequests.show');
-    Route::get('/myrequests/{form}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
-    Route::delete('/myrequests/{form}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
-
     Route::resource('courses', CourseController::class);
     Route::resource('programmes', ProgrammeController::class);
     Route::resource('groups', GroupController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('users', UserController::class);
+    Route::get('/myrequests', [MyRequestController::class, 'showall'])->name('myrequests.showall');
+
+    // });
+
+    // Route::middleware('role:2')->group(function () {
+    Route::get('/dashboard/coordinator', [CoorController::class, 'dashboard_coordinator'])->name('coordinator');
+    Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
+    Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
+    Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
+    Route::get('/myrequests/{myRequest}', [MyRequestController::class, 'show'])->name('myrequests.show');
+    Route::get('/myrequests/{myRequest}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
+    Route::delete('/myrequests/{myRequest}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
+    // });
+
+    // Route::middleware('role:3')->group(function () {
+    Route::get('/dashboard/tc', [TCController::class, 'dashboard_tc'])->name('tc');
+    Route::get('/myrequests', [MyRequestController::class, 'showall'])->name('myrequests.showall');
+    // });
 
 
     Route::get('user', [UserController::class, 'index'])->name('user.index');
