@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Group;
 use App\Models\MyRequest;
+use App\Models\MyRequestBridge;
 use App\Models\Programme;
 use App\Models\Semester;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Validator;
-use PhpParser\Node\Stmt\Foreach_;
 
 class MyRequestController extends Controller
 {
@@ -26,12 +25,6 @@ class MyRequestController extends Controller
         return view('myrequest.index', compact('myRequests'));
     }
 
-    public function showall()
-    {
-        $myRequests=MyRequest::all();
-        return view('myrequest.showall', compact('myRequests'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -39,14 +32,12 @@ class MyRequestController extends Controller
      */
     public function create()
     {
-
         $semesters=Semester::all();
         $groups=Group::all();
         $users=Auth::user();
         $courses=Course::all();
         $programmes=Programme::where('Coor_id',Auth::id())->get(); //cara nk access orang yg tengah login (current user)
         return view('myrequest.create', compact('semesters','groups','users','programmes','courses'));
-
     }
 
     /**
@@ -57,22 +48,15 @@ class MyRequestController extends Controller
      */
     public function store(Request $request)
     {
-        //eliqouent
-        // dd($request->all()); //dump&die (dump semua data dia pegang and dia matikan)
-        // $myrequest=new MyRequest();
-        // $myrequest->Coor_id=Auth::id();
-        // $myrequest->programme_id=$request->get('programme_id');
-        //etc etc
-        // $myrequest->save();
+        //MyRequest
+        $myRequest = new MyRequest();
+        $myRequest->Coor_id = Auth::id();
+        $myRequest->programme_id = $request->get('programme_id');
+        $myRequest->semester_id = $request->get('semester_id');
+        $myRequest->group_id = $request->get('group_id');
+        $myRequest->save();
 
-//QueryBuilder
-        $Coor_id=Auth::id(); //current person yg login
-        $programme_id=$request->get('programme_id');
-        $semester_id=$request->get('semester_id');
-        $group_id=$request->get('group_id');
-
-
-
+        //MyRequestBridge
         $course_ids=$request->get('course_id');
         $lecture_hours=$request->get('lecture_hour');
         $tutorial_hours=$request->get('tutorial_hour');
@@ -81,12 +65,9 @@ class MyRequestController extends Controller
         $lecturer_names=$request->get('lecturer_name');
 
         foreach ($course_ids as $key => $course_id) {
-            $data=array(
-                'Coor_id'=> $Coor_id,              //(column name => value yg kita dah get dekat atas)
-                'programme_id'=> $programme_id,
-                'semester_id'=> $semester_id,
-                'group_id'=> $group_id,
 
+            $data=array(
+                'bridge_id'=> $myRequest->id, //Semua records di MyRequestBridge akan diconnectkan melalui bridge_id.
                 'course_id'=> $course_id,
                 'lecture_hour'=> $lecture_hours[$key],
                 'tutorial_hour'=> $tutorial_hours[$key],
@@ -95,10 +76,9 @@ class MyRequestController extends Controller
                 'lecturer_name'=> $lecturer_names[$key],
                 'created_at'=> Carbon::now(), //carbon ni extension/helper for time&date in laravel
                 'updated_at'=> Carbon::now(),
-
             );
 
-            MyRequest::insert($data);
+            MyRequestBridge::insert($data);
         }
 
         return redirect()->route('myrequests.index')->with('success','Form successfuly submitted');
@@ -107,14 +87,19 @@ class MyRequestController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MyRequest  $myRequest
+     * @param  \App\Models\MyRequest  $form
      * @return \Illuminate\Http\Response
      */
-    public function show(MyRequest $myRequest)
+    public function show(MyRequest $form)
     {
+        $borang=MyRequest::find($form->id);
+        return view('myrequest.show', compact('borang'));
+    }
 
-        return view('myrequest.show', compact('myRequest'));
-
+    public function showall()
+    {
+        $myRequests=MyRequest::all();
+        return view('myrequest.showall', compact('myRequests'));
     }
 
     /**
@@ -125,10 +110,10 @@ class MyRequestController extends Controller
      */
     public function edit(MyRequest $myRequest)
     {
+        $programmes=Programme::all();
         $groups=Group::all();
-        $courses=Course::all();
 
-        return view('myrequest.edit', compact('groups', 'courses', 'myRequest'));
+        return view('myrequest.edit', compact('programmes','groups', 'myRequest'));
     }
 
     /**
@@ -153,7 +138,6 @@ class MyRequestController extends Controller
 
         $myRequest->save();
         return redirect()->route('myrequests.index')->with('success', 'Course updated.');
-
     }
 
     /**
