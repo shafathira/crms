@@ -16,6 +16,8 @@ use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PrintController;
+use App\Http\Controllers\TheRequestedController;
+
 
 
 /*
@@ -36,11 +38,10 @@ Route::get('/', function () {
 
 Auth::routes(); //login&register
 
-Route::get('generate-pdf', [PrintController::class, 'generatePDF'])->name('generate-pdf');
 
 Route::middleware('auth')->group(function () {
 
-    // Route::middleware('role:1')->group(function () {
+    Route::middleware('role:1')->group(function () {
 
     Route::get('/dashboard/admin', [AdminController::class, 'dashboard_admin'])->name('admin');
     Route::resource('courses', CourseController::class);
@@ -48,32 +49,30 @@ Route::middleware('auth')->group(function () {
     Route::resource('groups', GroupController::class);
     Route::resource('semesters', SemesterController::class);
     Route::resource('users', UserController::class);
-    Route::get('/myrequests', [MyRequestController::class, 'showall'])->name('myrequests.showall');
 
-    // });
+    });
 
-    // Route::middleware('role:2')->group(function () {
+    Route::middleware('role:2')->group(function () {
     Route::get('/dashboard/coordinator', [CoorController::class, 'dashboard_coordinator'])->name('coordinator');
     Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
     Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
     Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
-    Route::get('/myrequests/{myRequest}', [MyRequestController::class, 'show'])->name('myrequests.show');
     Route::get('/myrequests/{myRequest}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
     Route::delete('/myrequests/{myRequest}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
-    // });
+    });
 
-    // Route::middleware('role:3')->group(function () {
+    Route::middleware('role:3')->group(function () {
     Route::get('/dashboard/tc', [TCController::class, 'dashboard_tc'])->name('tc');
-    Route::get('/myrequests', [MyRequestController::class, 'showall'])->name('myrequests.showall');
-    // });
+    });
 
+    Route::get('generate-pdf', [PrintController::class, 'generatePDF'])->name('generate-pdf');
 
+    Route::get('/therequesteds', [TheRequestedController::class, 'index'])->name('therequesteds.index');
+    Route::get('/myrequests/{myRequest}', [MyRequestController::class, 'show'])->name('myrequests.show');
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/password', [ProfileController::class, 'password'])->name('profile.password');
 });
-
-Route::resource('products', ProductController::class);
 
 Route::get('/error/no_permission', function(){ return view('error.no_permission'); })->name('error.no_permission');

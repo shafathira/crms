@@ -15,7 +15,7 @@ $(document).ready(function() {
     $(add_button).click(function(e){ //on add input button click
         e.preventDefault();
         //add input box
-        var template =  `<tr>
+        var template =  `<tr style="font-size: 12px">
                         <td>
                         <select onchange="select(this)" id="course_`+course_counter+`" name="course_id[]">
                         <option value="" selected disabled>Choose course</option>` +

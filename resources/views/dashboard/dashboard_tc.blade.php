@@ -14,7 +14,7 @@
 
                     <div class="form-row form-group">
                         <div class="col">
-                            <a href="{{ route('myrequests.showall') }}" name="myrequests.showall" type="button" class="btn btn-warning btn-block">View Requested Courses</a>
+                            <a href="{{ route('therequesteds.index') }}" name="therequesteds.index" type="button" class="btn btn-warning btn-block">View Requested Courses</a>
                         </div>
                         {{-- <div class="col">
                             <a href="{{ route('myrequests.index') }}" type="button" class="btn btn-primary btn-block">View Requested Courses</a>

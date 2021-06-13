@@ -81,7 +81,7 @@
 
                 <tbody class="input_fields_wrap">
 
-                    <tr>
+                    <tr style="font-size: 12px">
                         <td>
                             <select onchange="select(this)" id="course_1" name="course_id[]">
                             <option value="" selected disabled>Choose course</option>

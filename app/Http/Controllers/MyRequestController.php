@@ -96,11 +96,6 @@ class MyRequestController extends Controller
         return view('myrequest.show', compact('myRequest','myRequestBridge'));
     }
 
-    public function showall()
-    {
-        $myRequests=MyRequest::all();
-        return view('myrequest.showall', compact('myRequests'));
-    }
 
     /**
      * Show the form for editing the specified resource.

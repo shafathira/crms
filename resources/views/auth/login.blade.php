@@ -49,7 +49,6 @@
                         <h6>
                             <a href="{{ route('password.request') }}" class="link footer-link">{{ __('Forgot password?') }}</a>
                         </h6>
-                        <a href="{{ route('generate-pdf') }}" class="btn btn-warning">Generate PDF</a>
                     </div>
                 </div>
             </div>

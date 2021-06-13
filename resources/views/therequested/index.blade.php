@@ -25,7 +25,7 @@
 
                 <td>
 
-                    {{-- <a href="{{route('myrequests.show', $myRequest)}}" class="btn btn-info btn-fill ">Show</a> --}}
+                    <a href="{{route('myrequests.show', $myRequest)}}" class="btn btn-info btn-fill ">Show</a>
                 </td>
             </tr>
             @endforeach
