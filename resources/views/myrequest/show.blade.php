@@ -75,17 +75,8 @@
                 </tbody>
 
             </table>
-            @if (Auth::user()->role_id ==1)
-            <a href="{{ route('therequesteds.index') }}" class="btn btn-primary my-3">Back Requested Courses</a>
-
-            @elseif (Auth::user()->role_id ==2)
             <a href="{{ route('myrequests.index') }}" class="btn btn-primary my-3">Back Requested Courses</a>
-
-            @elseif (Auth::user()->role_id ==3)
-            <a href="{{ route('therequesteds.index') }}" class="btn btn-primary my-3">Back Requested Courses</a>
-
-            @endif
-            <a href="{{ route('generate-pdf') }}" class="btn btn-warning">Generate PDF</a>
+            <a href="{{ route('myrequests.generate_pdf') }}" class="btn btn-primary my-2">Generate PDF</a>
 
 
 </div>

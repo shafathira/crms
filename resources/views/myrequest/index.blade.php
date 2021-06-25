@@ -23,6 +23,7 @@
                 <td>{{ $myRequest->programmes->programme_code }}</td>
                 <td>{{ $myRequest->groups->group_code }}</td>
 
+                @if (Auth::user()->role_id ==2)
                 <td>
 
                     <a href="{{route('myrequests.show', $myRequest)}}" class="btn btn-info btn-fill ">Show</a>
@@ -38,6 +39,14 @@
                         <button type="submit" class="btn btn-danger ">Delete</button>
                     </form>
                 </td>
+                @else
+                <td>
+
+                    <a href="{{route('myrequests.show', $myRequest)}}" class="btn btn-info btn-fill ">Show</a>
+                </td>
+                @endif
+
+
             </tr>
             @endforeach
 

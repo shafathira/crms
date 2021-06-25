@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.printlayout')
 
 @section('content')
 <div class="container mt-4" >
@@ -13,19 +13,19 @@
                 <tbody>
                     <tr>
                         <td>Coordinator Name</td>
-                        <td><span>{{ $myRequest->coordinators->name }}</span></td>
+                        {{-- <td><span>{{ $myRequest->coordinators->name }}</span></td> --}}
                     </tr>
 
                     <tr>
                         <td>Program</td>
                         <td>
-                            <span>{{ $myRequest->programmes->programme_code }}</span>
+                            {{-- <span>{{ $myRequest->programmes->programme_code }}</span> --}}
                         </td>
                     </tr>
 
                     <tr>
                         <td>Telephone Number</td>
-                        <td><span>{{ $myRequest->coordinators->Phone_No }}</span></td>
+                        {{-- <td><span>{{ $myRequest->coordinators->Phone_No }}</span></td> --}}
                     </tr>
                 </tbody>
 
@@ -36,14 +36,15 @@
                 <tbody>
                     <tr>
                         <td>Semester</td>
-                        <td><span>{{ $myRequest->semesters->semester_session }}</span></td>
+                        {{-- <td><span>{{ $myRequest->semesters->semester_session }}</span></td> --}}
                     </tr>
                     <tr>
                         <td>Group</td>
-                        <td><span>{{ $myRequest->groups->group_code }}</span></td>
+                        {{-- <td><span>{{ $myRequest->groups->group_code }}</span></td> --}}
                     </tr>
                 </tbody>
             </table>
+            &nbsp;&nbsp;
             <table class="table table-bordered mb-4">
                 <thead>
                     <tr>
@@ -75,8 +76,9 @@
                 </tbody>
 
             </table>
+            {{-- <a href="{{ route('myrequests.index') }}" class="btn btn-primary my-3">Back Requested Courses</a>
+            <a href="{{ route('myrequests.generate_pdf') }}" class="btn btn-primary my-2">Generate PDF</a> --}}
 
-            <a href="{{ route('therequesteds.index') }}" class="btn btn-primary my-3">Back Requested Courses</a>
 
 </div>
 @endsection

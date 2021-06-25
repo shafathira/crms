@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MyRequest;
 use App\Models\Programme;
 use App\Models\User;
+use PDF;
 use Illuminate\Http\Request;
 
 class ProgrammeController extends Controller
@@ -100,4 +102,15 @@ class ProgrammeController extends Controller
 
         return redirect()->route('programmes.index')->with('success','Program successfuly deleted');
     }
+
+    public function search()
+    {
+        $search_text = $_GET['query'];
+        $myRequests = MyRequest::all();
+        $programmes = Programme::where('programme_code','LIKE','%'.$search_text. '%')->get();
+
+        return view('programme.search',compact('programmes','myRequests'));
+    }
+
+
 }

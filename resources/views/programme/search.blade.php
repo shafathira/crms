@@ -13,7 +13,7 @@
             <th>Programme Code</th>
             <th>Group Code</th>
 
-            <th>Action</th>
+            <th colspan="3">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -23,10 +23,30 @@
                 <td>{{ $myRequest->programmes->programme_code }}</td>
                 <td>{{ $myRequest->groups->group_code }}</td>
 
+                @if (Auth::user()->role_id ==2)
                 <td>
 
                     <a href="{{route('myrequests.show', $myRequest)}}" class="btn btn-info btn-fill ">Show</a>
                 </td>
+                <td>
+                    <a href="{{route('myrequests.edit', $myRequest)}}" class="btn btn-success ">Edit</a>
+                </td>
+
+                <td>
+                    <form method="post" action="{{ route('myrequests.destroy',  $myRequest) }}" >
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger ">Delete</button>
+                    </form>
+                </td>
+                @else
+                <td>
+
+                    <a href="{{route('myrequests.show', $myRequest)}}" class="btn btn-info btn-fill ">Show</a>
+                </td>
+                @endif
+
+
             </tr>
             @endforeach
 

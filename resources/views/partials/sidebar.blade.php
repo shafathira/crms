@@ -20,7 +20,7 @@ Tip 2: you can also add an image using data-image tag
 
             @if (Auth::user()->role_id ==1)
             <li>
-                <a class="nav-link" href="{{route('therequesteds.index')}}">
+                <a class="nav-link" href="{{ route('myrequests.index') }}">
                     <i class="nc-icon nc-send"></i>
                     <p>Requested Courses</p>
                 </a>
@@ -85,7 +85,7 @@ Tip 2: you can also add an image using data-image tag
             @elseif (Auth::user()->role_id ==3)
 
             <li>
-                <a class="nav-link" href="{{ route('therequesteds.index') }}">
+                <a class="nav-link" href="{{ route('myrequests.index') }}">
                     <i class="nc-icon nc-send"></i>
                     <p>Requested Courses</p>
                 </a>

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CoorController;
 use App\Http\Controllers\TCController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\MyRequestController;
@@ -15,8 +14,6 @@ use App\Http\Controllers\ProgrammeController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PrintController;
-use App\Http\Controllers\TheRequestedController;
 
 
 
@@ -54,10 +51,10 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:2')->group(function () {
     Route::get('/dashboard/coordinator', [CoorController::class, 'dashboard_coordinator'])->name('coordinator');
-    Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
     Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
     Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
     Route::get('/myrequests/{myRequest}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
+    Route::post('/myrequests/{myRequest}/update', [MyRequestController::class, 'update'])->name('myrequests.update');
     Route::delete('/myrequests/{myRequest}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
     });
 
@@ -65,9 +62,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/tc', [TCController::class, 'dashboard_tc'])->name('tc');
     });
 
-    Route::get('generate-pdf', [PrintController::class, 'generatePDF'])->name('generate-pdf');
-
-    Route::get('/therequesteds', [TheRequestedController::class, 'index'])->name('therequesteds.index');
+    Route::get('/search', [ProgrammeController::class, 'search'])->name('programmes.search');
+    Route::get('/myrequests/generate_pdf', [MyRequestController::class, 'generatePDF'])->name('myrequests.generate_pdf');
+    Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
     Route::get('/myrequests/{myRequest}', [MyRequestController::class, 'show'])->name('myrequests.show');
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');

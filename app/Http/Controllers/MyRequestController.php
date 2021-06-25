@@ -9,6 +9,7 @@ use App\Models\MyRequestBridge;
 use App\Models\Programme;
 use App\Models\Semester;
 use Carbon\Carbon;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,7 @@ class MyRequestController extends Controller
      */
     public function index()
     {
-        $myRequests=MyRequest::where('Coor_id',Auth::id())->get();
+        $myRequests=MyRequest::all();
         return view('myrequest.index', compact('myRequests'));
     }
 
@@ -105,10 +106,13 @@ class MyRequestController extends Controller
      */
     public function edit(MyRequest $myRequest)
     {
-        $programmes=Programme::all();
+        $semesters=Semester::all();
         $groups=Group::all();
+        $programmes=Programme::where('Coor_id',Auth::id())->get(); //cara nk access orang yg tengah login (current user)
+        $courses=Course::all();
+        $myRequestBridge=MyRequestBridge::where('bridge_id',$myRequest->id)->get();
 
-        return view('myrequest.edit', compact('programmes','groups', 'myRequest'));
+        return view('myrequest.edit', compact('semesters','programmes','groups', 'courses','myRequest', 'myRequestBridge'));
     }
 
     /**
@@ -120,6 +124,8 @@ class MyRequestController extends Controller
      */
     public function update(Request $request, MyRequest $myRequest)
     {
+        $myRequest->programmes->programme_code = $request->get('programme_code');
+        $myRequest->semesters->semester_session = $request->get('semester_session');
         $myRequest->groups->group_code = $request->get('group_code');
         $myRequest->courses->course_code = $request->get('course_code');
         $myRequest->courses->course_name = $request->get('course_name');
@@ -132,7 +138,7 @@ class MyRequestController extends Controller
         $myRequest->lecturer_name = $request->get('lecturer_name');
 
         $myRequest->save();
-        return redirect()->route('myrequests.index')->with('success', 'Course updated.');
+        return redirect()->route('myrequests.index')->with('success', 'Request updated.');
     }
 
     /**
@@ -146,5 +152,16 @@ class MyRequestController extends Controller
         $myRequest->delete();
 
         return redirect()->route('myrequests.index')->with('success','Deleted Successfuly');
+    }
+
+    public function generatePDF(MyRequest $myRequest)
+    {
+        $myRequestBridge=MyRequestBridge::where('bridge_id',$myRequest->id)->get();
+        $data = MyRequest::all();
+
+        // view()->share('myrequests',$data);
+        $pdf = PDF::loadView('myrequest.generate_pdf', $data, compact('myRequest','myRequestBridge'))->setOptions(['defaultFont' => 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']);
+
+        return $pdf->stream();
     }
 }
