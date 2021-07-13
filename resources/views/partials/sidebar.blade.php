@@ -1,9 +1,5 @@
 <div class="sidebar" data-image="{{('assets/img/sidebar-5.jpg')}}">
-    <!--
-Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
-Tip 2: you can also add an image using data-image tag
--->
     <div class="sidebar-wrapper">
         <div class="logo">
             <a href="{{route('login')}}" class="simple-text">
@@ -70,9 +66,15 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
             <li>
-                <a class="nav-link" href="{{ route('myrequests.index') }}">
+                <a class="nav-link" href="{{ route('coor_req') }}">
+                    <i class="nc-icon nc-planet"></i>
+                    <p>My Requests</p>
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" href="{{ route('notcoor_req') }}">
                     <i class="nc-icon nc-send"></i>
-                    <p>Requested Courses</p>
+                    <p>All Requests</p>
                 </a>
             </li>
             <li >

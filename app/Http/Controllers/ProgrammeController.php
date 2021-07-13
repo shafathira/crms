@@ -15,9 +15,18 @@ class ProgrammeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $programmes = Programme::all();
+        $programmes = Programme::where([
+            ['programme_code','!=', Null],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('programme_code','LIKE','%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate(10);
 
         return view('programme.index', compact('programmes'));
     }

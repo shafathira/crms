@@ -13,9 +13,18 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $groups = Group::all();
+        $groups = Group::where([
+            ['group_code','!=', Null],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('group_code','LIKE','%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate(10);
 
         return view('group.index', compact('groups'));
     }

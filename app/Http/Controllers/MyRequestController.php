@@ -8,8 +8,8 @@ use App\Models\MyRequest;
 use App\Models\MyRequestBridge;
 use App\Models\Programme;
 use App\Models\Semester;
-use Carbon\Carbon;
 use PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,10 +22,28 @@ class MyRequestController extends Controller
      */
     public function index()
     {
+
+        $programmes=Programme::all();
         $myRequests=MyRequest::all();
-        return view('myrequest.index', compact('myRequests'));
+        return view('myrequest.index', compact('myRequests','programmes'));
     }
 
+    public function search(Request $request)
+    {
+        $programmes=Programme::where([
+            ['programme_code','!=', Null],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('programme_code','LIKE','%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate(10);
+        $myRequests=MyRequest::all();
+        // $myRequests=MyRequest::where('programme_id', $request->get('programme_id'))->get();
+        return view('myrequest.index', compact('myRequests'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -82,7 +100,7 @@ class MyRequestController extends Controller
             MyRequestBridge::insert($data);
         }
 
-        return redirect()->route('myrequests.index')->with('success','Form successfuly submitted');
+        return redirect()->route('coor_req')->with('success','Form successfuly submitted');
     }
 
     /**
@@ -108,7 +126,7 @@ class MyRequestController extends Controller
     {
         $semesters=Semester::all();
         $groups=Group::all();
-        $programmes=Programme::where('Coor_id',Auth::id())->get(); //cara nk access orang yg tengah login (current user)
+        $programmes=Programme::where('Coor_id',Auth::id())->get();
         $courses=Course::all();
         $myRequestBridge=MyRequestBridge::where('bridge_id',$myRequest->id)->get();
 
@@ -124,21 +142,36 @@ class MyRequestController extends Controller
      */
     public function update(Request $request, MyRequest $myRequest)
     {
-        $myRequest->programmes->programme_code = $request->get('programme_code');
-        $myRequest->semesters->semester_session = $request->get('semester_session');
-        $myRequest->groups->group_code = $request->get('group_code');
-        $myRequest->courses->course_code = $request->get('course_code');
-        $myRequest->courses->course_name = $request->get('course_name');
-        $myRequest->courses->credit_hour = $request->get('credit_hour');
 
-        $myRequest->lecture_hour = $request->get('lecture_hour');
-        $myRequest->tutorial_hour = $request->get('tutorial_hour');
-        $myRequest->lab_code = $request->get('lab_code');
-        $myRequest->student_number = $request->get('student_number');
-        $myRequest->lecturer_name = $request->get('lecturer_name');
+        $myRequest->programme_id = $request->get('programme_id');
+        $myRequest->semester_id = $request->get('semester_id');
+        $myRequest->group_id = $request->get('group_id');
 
         $myRequest->save();
-        return redirect()->route('myrequests.index')->with('success', 'Request updated.');
+
+        $bridge_ids=$request->get('bridge_id');
+        $course_ids=$request->get('course_id');
+        $lecture_hours=$request->get('lecture_hour');
+        $tutorial_hours=$request->get('tutorial_hour');
+        $lab_hours=$request->get('lab_hour');
+        $student_numbers=$request->get('student_number');
+        $lecturer_names=$request->get('lecturer_name');
+
+        foreach ($bridge_ids as $key => $bridge_id) {
+
+            $bridge=MyRequestBridge::find($bridge_id); // find record with id
+
+                $bridge->course_id= $course_ids[$key];
+                $bridge->lecture_hour= $lecture_hours[$key];
+                $bridge->tutorial_hour= $tutorial_hours[$key];
+                $bridge->lab_hour= $lab_hours[$key];
+                $bridge->student_number= $student_numbers[$key];
+                $bridge->lecturer_name= $lecturer_names[$key];
+
+                $bridge->save();
+        }
+
+        return redirect()->route('coor_req')->with('success', 'Request updated.');
     }
 
     /**
@@ -149,19 +182,23 @@ class MyRequestController extends Controller
      */
     public function destroy(MyRequest $myRequest)
     {
-        $myRequest->delete();
+        $myRequestBridge=MyRequestBridge::where('bridge_id',$myRequest->id)->get();
+        foreach ($myRequest-> ids as $id) {
 
-        return redirect()->route('myrequests.index')->with('success','Deleted Successfuly');
+            $id->delete();
+        }
+        return redirect()->route('coor_req')->with('success','Deleted Successfuly');
     }
 
     public function generatePDF(MyRequest $myRequest)
     {
         $myRequestBridge=MyRequestBridge::where('bridge_id',$myRequest->id)->get();
-        $data = MyRequest::all();
+        $data = [
+            'myRequest' => $myRequest,
+            'myRequestBridge' => $myRequestBridge
+        ];
+        $pdf = PDF::loadView('myrequest.generate_pdf',$data)->setPaper('a4', 'landscape');
 
-        // view()->share('myrequests',$data);
-        $pdf = PDF::loadView('myrequest.generate_pdf', $data, compact('myRequest','myRequestBridge'))->setOptions(['defaultFont' => 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']);
-
-        return $pdf->stream();
+        return $pdf->stream('requested_course.pdf');
     }
 }

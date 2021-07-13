@@ -15,11 +15,20 @@ class UserController extends Controller
      * @param  \App\Models\User  $model
      * @return \Illuminate\View\View
      */
-    public function index()
-    {   //condition dia akan get user yg id dia tak sama dengn 1
-        $users = User::where('role_id','!=',1)->get();
-        return view('users.index',compact('users'));
+    public function index(Request $request)
+    {   //condition dia akan get user yg id dia tak sama dengn 1(Admin) tanak kasi admin terdelete acc sendiri
+        $users = User::where([
+            ['role_id','!=',1],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('name','LIKE','%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate(10);
 
+        return view('users.index',compact('users'));
     }
 
     /**

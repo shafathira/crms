@@ -75,8 +75,8 @@
                 </tbody>
 
             </table>
-            <a href="{{ route('myrequests.index') }}" class="btn btn-primary my-3">Back Requested Courses</a>
-            <a href="{{ route('myrequests.generate_pdf') }}" class="btn btn-primary my-2">Generate PDF</a>
+            <a href="{{ url()->previous() }}" class="btn btn-primary my-3">Back</a>
+            <a href="{{ route('myrequests.generate_pdf', $myRequest) }}" class="btn btn-primary my-2">Generate PDF</a>
 
 
 </div>

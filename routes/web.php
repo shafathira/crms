@@ -50,11 +50,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:2')->group(function () {
+    Route::get('/myrequest', [CoorController::class, 'index'])->name('coor_req');
+    Route::get('/myrequest/not', [CoorController::class, 'notcoor'])->name('notcoor_req');
     Route::get('/dashboard/coordinator', [CoorController::class, 'dashboard_coordinator'])->name('coordinator');
     Route::get('/myrequests/create', [MyRequestController::class, 'create'])->name('myrequests.create');
     Route::post('/myrequests', [MyRequestController::class, 'store'])->name('myrequests.store');
     Route::get('/myrequests/{myRequest}/edit', [MyRequestController::class, 'edit'])->name('myrequests.edit');
-    Route::post('/myrequests/{myRequest}/update', [MyRequestController::class, 'update'])->name('myrequests.update');
+    Route::put('/myrequests/{myRequest}/edit', [MyRequestController::class, 'update'])->name('myrequests.update');
     Route::delete('/myrequests/{myRequest}', [MyRequestController::class, 'destroy'])->name('myrequests.destroy');
     });
 
@@ -62,8 +64,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/tc', [TCController::class, 'dashboard_tc'])->name('tc');
     });
 
+    // Route::post('/myrequests', [MyRequestController::class, 'search'])->name('myrequests.search');
     Route::get('/search', [ProgrammeController::class, 'search'])->name('programmes.search');
-    Route::get('/myrequests/generate_pdf', [MyRequestController::class, 'generatePDF'])->name('myrequests.generate_pdf');
+    Route::get('/myrequests/{myRequest}/generate_pdf', [MyRequestController::class, 'generatePDF'])->name('myrequests.generate_pdf');
     Route::get('/myrequests', [MyRequestController::class, 'index'])->name('myrequests.index');
     Route::get('/myrequests/{myRequest}', [MyRequestController::class, 'show'])->name('myrequests.show');
     Route::get('user', [UserController::class, 'index'])->name('user.index');

@@ -1,7 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="mx-auto pull-right">
+    <div class="">
+        <form action="{{ route('users.index') }}" method="GET" role="search">
+            @csrf
+            <div class="input-group">
+                <span class="input-group-btn mr-5 mt-1">
+                    <button class="btn btn-info btn-fill " type="submit" title="Search projects">
+                        <span class="nc-icon nc-zoom-split"></span>
+                    </button>
+                </span>
+                <span class="input-group-btn mr-5 mt-1">
+                <input type="text" class="form-control" name="term" placeholder="Search user" id="term">
+                </span>
+                <a href="{{ route('users.index') }}" class=" mt-1">
+                    <span class="input-group-btn ">
+                        <button class="btn btn-danger btn-fill " type="button" title="Refresh page">
+                            <span class="nc-icon nc-refresh-02"></span>
+                        </button>
+                    </span>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="container mt-4">
     @include('partials.message')
     <h1>User List</h1>

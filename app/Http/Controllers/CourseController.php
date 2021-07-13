@@ -12,9 +12,18 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all();
+        $courses = Course::where([
+            ['course_code','!=', Null],
+            [function ($query) use ($request) {
+                if (($term = $request->term)) {
+                    $query->orWhere('course_code','LIKE','%' . $term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id", "desc")
+        ->paginate(10);
 
         return view('course.index', compact('courses'));
     }
